@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="form-container">
+      <h1 class="header">{{ isEdit ? 'Редактирование задачи' : 'Новая задача' }}</h1>
+  
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Название задачи:</label>
+          <input type="text" [(ngModel)]="formModel.title" name="title" required>
+        </div>
+  
+        <div class="form-group">
+          <label>Описание:</label>
+          <textarea [(ngModel)]="formModel.description" name="description"></textarea>
+        </div>
+  
+        <div class="form-group" *ngIf="isEdit">
+          <label>Статус:</label>
+          <select [(ngModel)]="formModel.status" name="status">
+            <option value="New">Новая</option>
+            <option value="InProgress">В работе</option>
+            <option value="Completed">Завершена</option>
+          </select>
+        </div>
+  
+        <div class="form-group" style="margin-top: 2rem;">
+          <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+          <a routerLink="/" class="btn">❌ Отмена</a>
+        </div>
+      </form>
+    </div>
+  </div>

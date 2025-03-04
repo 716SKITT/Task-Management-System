@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="header">
+      <h1>Менеджер задач</h1>
+      <a routerLink="/create" class="btn btn-primary">
+        ➕ Новая задача
+      </a>
+    </div>
+  
+    <div class="task-list">
+      <div class="filter-group">
+        <select [(ngModel)]="selectedStatus" (change)="onStatusChange()">
+          <option [value]="undefined">Все статусы</option>
+          <option value="New">Новая</option>
+          <option value="InProgress">В работе</option>
+          <option value="Completed">Завершена</option>
+        </select>
+      </div>
+  
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Статус</th>
+            <th>Дата создания</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks">
+            <td>{{ task.title }}</td>
+            <td>
+              <div class="description-container">
+                <div 
+                  class="description-content"
+                  [class.expanded]="isExpanded(task.id)"
+                  (click)="toggleDescription(task.id)"
+                >
+                  {{ task.description }}
+                </div>
+                <button 
+                    *ngIf="task.description && task.description.length > 100"
+                    class="toggle-description"
+                    (click)="toggleDescription(task.id)"
+                    >
+                  {{ isExpanded(task.id) ? 'Свернуть' : 'Подробнее...' }}
+                </button>
+              </div>
+            </td>
+            <td><span class="status status-{{task.status.toLowerCase()}}">{{ getStatusText(task.status) }}</span></td>
+            <td>{{ task.createdAt | date:'dd.MM.yyyy HH:mm' }}</td>
+            <td>
+              <div class="action-buttons">
+                <a [routerLink]="['/edit', task.id]" class="action-btn edit" title="Редактировать">
+                  ✏️
+                </a>
+                <button (click)="deleteTask(task.id)" class="action-btn delete" title="Удалить">
+                  🗑️
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn">← Назад</button>
+        <span class="page-number">Страница {{currentPage}}</span>
+        <button (click)="nextPage()" class="btn">Вперед →</button>
+      </div>
+    </div>
+  </div>
