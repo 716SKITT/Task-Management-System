@@ -15,12 +15,19 @@ services:
   api:
     build: ./backend
     ports:
-      - "5000:8080"
+      - "8080:8080"
     depends_on:
       - postgres
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=taskdb;Username=postgres;Password=postgres;"
+
+  frontend:
+    build: ./frontend/taskmanager-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
 
 volumes:
   postgres-data:
