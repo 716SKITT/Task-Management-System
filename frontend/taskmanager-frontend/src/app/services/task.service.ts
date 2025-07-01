@@ -7,8 +7,7 @@ import { CreateTaskDto, TaskDto, UpdateTaskDto, TaskStatus } from '../models/tas
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:5000/api/tasks';
-
+  private apiUrl = '/api/tasks';
   constructor(private http: HttpClient) { }
 
   getTasks(page: number, pageSize: number, status?: TaskStatus): Observable<TaskDto[]> {
